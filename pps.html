@@ -8,6 +8,41 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    let timeLeft = 2 * 60 * 60; // 2 hours in seconds
+    const countdownEl = document.getElementById("countdown");
+
+    if (!countdownEl) {
+        console.error("Countdown element not found");
+        return;
+    }
+
+    function updateCountdown() {
+        const hours = Math.floor(timeLeft / 3600);
+        const minutes = Math.floor((timeLeft % 3600) / 60);
+        const seconds = timeLeft % 60;
+
+        countdownEl.textContent =
+            `Publish time - ${String(hours).padStart(2, '0')}:` +
+            `${String(minutes).padStart(2, '0')}:` +
+            `${String(seconds).padStart(2, '0')}`;
+
+        if (timeLeft > 0) {
+            timeLeft--;
+        } else {
+            countdownEl.textContent = "Published 🎉";
+            clearInterval(timer);
+        }
+    }
+
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
+
+});
+</script>
+
 <body>
     <!-- Floating Pink Lips Effect -->
     <div class="floating-lips">
@@ -45,9 +80,11 @@
                     <button class="search-button">AI JERK OFF</button>
                     <input class="search-input" type="text" placeholder="What's on your dirty mind? Turn it into reality">
                     <div class="search-icon">🔍</div>
-                </div>
-                <div class="breathing-text">Cloning IP Address</div>
-            </div>
+                    </div>
+                    <div class="breathing-text" id="countdown">
+                     Publishing in… - 02:00:00
+          </div>
+
         </header>
 
         <!-- Navigation Menu -->
