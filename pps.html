@@ -9,39 +9,55 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <script>
+<script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    let timeLeft = 2 * 60 * 60; // 2 hours in seconds
     const countdownEl = document.getElementById("countdown");
+    if (!countdownEl) return;
 
-    if (!countdownEl) {
-        console.error("Countdown element not found");
-        return;
+    const DURATION = 2 * 60 * 60 * 1000; // 2 hours in ms
+    const STORAGE_KEY = "publish_end_time";
+
+    let endTime = localStorage.getItem(STORAGE_KEY);
+
+    // First visit → set end time
+    if (!endTime) {
+        endTime = Date.now() + DURATION;
+        localStorage.setItem(STORAGE_KEY, endTime);
+    } else {
+        endTime = parseInt(endTime, 10);
     }
 
     function updateCountdown() {
-        const hours = Math.floor(timeLeft / 3600);
-        const minutes = Math.floor((timeLeft % 3600) / 60);
-        const seconds = timeLeft % 60;
+        const now = Date.now();
+        let remaining = Math.floor((endTime - now) / 1000);
+
+        if (remaining <= 0) {
+            countdownEl.textContent = "🔴 Live Now";
+            localStorage.removeItem(STORAGE_KEY);
+            clearInterval(timer);
+            return;
+        }
+
+        const hours = Math.floor(remaining / 3600);
+        const minutes = Math.floor((remaining % 3600) / 60);
+        const seconds = remaining % 60;
+
+        let label = "Goes live in";
+        if (remaining <= 300) label = "Almost live…";
+        if (remaining <= 60) label = "Final countdown";
 
         countdownEl.textContent =
-            `Goes live in - ${String(hours).padStart(2, '0')}:` +
+            `${label} ${String(hours).padStart(2, '0')}:` +
             `${String(minutes).padStart(2, '0')}:` +
             `${String(seconds).padStart(2, '0')}`;
-
-        if (timeLeft > 0) {
-            timeLeft--;
-        } else {
-            countdownEl.textContent = "Published 🎉";
-            clearInterval(timer);
-        }
     }
 
     updateCountdown();
     const timer = setInterval(updateCountdown, 1000);
-
 });
 </script>
+
 
 <body>
     <!-- Floating Pink Lips Effect -->
