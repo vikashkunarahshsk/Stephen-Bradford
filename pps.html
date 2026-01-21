@@ -14,37 +14,36 @@ document.addEventListener("DOMContentLoaded", function () {
     const countdownEl = document.getElementById("countdown");
     if (!countdownEl) return;
 
-    const DURATION = 2 * 60 * 60 * 1000; // 2 hours in ms
-    const STORAGE_KEY = "publish_end_time";
+    const DURATION_MS = 2 * 60 * 60 * 1000; // 2 hours
+    const STORAGE_KEY = "publish_end_time_v1";
 
-    let endTime = localStorage.getItem(STORAGE_KEY);
+    let endTime = Number(localStorage.getItem(STORAGE_KEY));
 
-    // First visit → set end time
-    if (!endTime) {
-        endTime = Date.now() + DURATION;
+    // If endTime is missing or invalid, reset it
+    if (!endTime || isNaN(endTime)) {
+        endTime = Date.now() + DURATION_MS;
         localStorage.setItem(STORAGE_KEY, endTime);
-    } else {
-        endTime = parseInt(endTime, 10);
     }
 
     function updateCountdown() {
         const now = Date.now();
-        let remaining = Math.floor((endTime - now) / 1000);
+        let remainingMs = endTime - now;
 
-        if (remaining <= 0) {
+        if (remainingMs <= 0) {
             countdownEl.textContent = "🔴 Live Now";
             localStorage.removeItem(STORAGE_KEY);
             clearInterval(timer);
             return;
         }
 
-        const hours = Math.floor(remaining / 3600);
-        const minutes = Math.floor((remaining % 3600) / 60);
-        const seconds = remaining % 60;
+        const totalSeconds = Math.floor(remainingMs / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
 
         let label = "Goes live in";
-        if (remaining <= 300) label = "Almost live…";
-        if (remaining <= 60) label = "Final countdown";
+        if (totalSeconds <= 300) label = "Almost live…";
+        if (totalSeconds <= 60) label = "Final countdown";
 
         countdownEl.textContent =
             `${label} ${String(hours).padStart(2, '0')}:` +
@@ -52,11 +51,11 @@ document.addEventListener("DOMContentLoaded", function () {
             `${String(seconds).padStart(2, '0')}`;
     }
 
-    updateCountdown();
+    updateCountdown();                 // immediate update
     const timer = setInterval(updateCountdown, 1000);
+
 });
 </script>
-
 
 <body>
     <!-- Floating Pink Lips Effect -->
