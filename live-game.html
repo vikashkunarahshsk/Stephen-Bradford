@@ -1,0 +1,361 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Lust Goddess</title>
+    <link rel="icon" href="img/favicon.webp" type="image/webp" sizes="233x233">
+    <link rel="preload" href="img/1_1.webp" as="image">
+    <link rel="preload" href="img/2_1.webp" as="image">
+    <link rel="preload" href="img/3_1.webp" as="image">
+    <style>
+        * {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+  html, body, * {
+    cursor: url('img/cursor.webp') 16 16,     /* best: .cur with hotspot */
+            url('img/cursor.webp') 16 16,    /* fallback: png (may require same-origin) */
+            auto !important; 
+        }
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-align: start;
+            -ms-flex-align: start;
+            align-items: flex-start;
+            background-color: rgb(178, 219, 255);
+            background-image: url(img/bg.webp);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+        }
+        .container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            gap: 4vh;
+            width: 100vw;
+            z-index: 10;
+        }
+  .cursor {
+    position: absolute;
+    width: 10vw;
+    height: 10vw;
+    background-image: url('img/cursor.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;          /* so it doesn't block pointer events */
+    transform: translate(-50%, -50%);
+    z-index: 9999;                 /* keep on top */
+    display: block;
+  }
+        .label {
+            width: 50%;
+            margin-top: 3vh;
+            -webkit-animation: pulse 1.5s infinite;
+            animation: pulse 1.5s infinite;
+            z-index: 11;
+        }
+        .cards {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            gap: 1vw;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            padding: 0 6vh;
+            width: 100vw;
+            max-height: 95vh;
+        }
+        .inner-card {
+            position: absolute;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: end;
+            -ms-flex-align: end;
+            align-items: flex-end;
+            overflow: visible;
+        }
+        .inner-card img {
+            -o-object-fit: contain;
+            object-fit: contain;
+            -webkit-transition: transform 0.2s;
+            -webkit-transition: -webkit-transform 0.2s;
+            transition: transform 0.2s, -webkit-transform 0.2s;
+            -webkit-animation: scale 1.5s infinite;
+            animation: scale 1.5s infinite;
+            z-index: 1;
+        }
+        .card:nth-of-type(1) .inner-card img {
+            width: 25vw;
+            margin-top: 20vh;
+            margin-right: 2vw;
+            margin-left: 1.2vw;
+        }
+        .card:nth-of-type(1) .inner-card:hover img {
+            width: 33vw;
+            margin-bottom: 10vh;
+            margin-top: 0;
+            margin-right: 0;
+        }
+        .card:nth-of-type(2) .inner-card img {
+            width: 40vw;
+            margin-top: 2vh;
+        }
+        .card:nth-of-type(3) .inner-card img {
+            width: 23vw;
+            margin-top: 25vh;
+            margin-left: 3vw;
+        }
+        .card:nth-of-type(3) .inner-card:hover img {
+            width: 33vw;
+            margin-top: 0;
+            margin-bottom: 5vh;
+        }
+        .card:nth-of-type(2) .inner-card {
+            -webkit-animation-delay: 0.33s;
+            animation-delay: 0.33s;
+        }
+        .card:nth-of-type(3) .inner-card {
+            -webkit-animation-delay: 0.66s;
+            animation-delay: 0.66s;
+        }
+        .inner-card:hover img {
+            -webkit-animation: hover-scale 0.2s forwards;
+            animation: hover-scale 0.2s forwards;
+        }
+        .inner-card:not(:hover) {
+            -webkit-animation: small-rotation 3s ease-in-out infinite !important;
+            animation: small-rotation 3s ease-in-out infinite !important;
+        }
+        .card {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            width: 100vw;
+            height: 80vh;
+            overflow: visible;
+        }
+        .marker-1-1,
+        .marker-1-2,
+        .marker-2-1,
+        .hand-3-1,
+        .hand-3-2,
+        .marker-3 {
+            position: absolute;
+        }
+        .marker-1-1 {
+            bottom: 80%;
+            left: 5%;
+            width: 9vw;
+        }
+        .marker-1-2 {
+            bottom: 80%;
+            left: 23%;
+            width: 6vw;
+        }
+        .hand-3-1 {
+            bottom: 70%;
+            right: 25%;
+            width: 7vw;
+        }
+        .marker-2-1 {
+            bottom: 32%;
+            left: 66%;
+            width: 6vw;
+        }
+        .hand-3-2 {
+            bottom: 70%;
+            left: 92%;
+            width: 7vw;
+        }
+        .marker-3 {
+            bottom: 85%;
+            right: 10%;
+            width: 7vw;
+        }
+        @-webkit-keyframes hover-scale {
+            to {
+                -webkit-transform: scale(1.1);
+                transform: scale(1.1);
+            }
+        }
+        @keyframes hover-scale {
+            to {
+                -webkit-transform: scale(1.1);
+                transform: scale(1.1);
+            }
+        }
+        @-webkit-keyframes scale {
+            0%,
+            100% {
+                -webkit-transform: scale(1);
+                transform: scale(1);
+            }
+            50% {
+                -webkit-transform: scale(1.01);
+                transform: scale(1.01);
+            }
+        }
+        @keyframes scale {
+            0%,
+            100% {
+                -webkit-transform: scale(1);
+                transform: scale(1);
+            }
+            50% {
+                -webkit-transform: scale(1.01);
+                transform: scale(1.01);
+            }
+        }
+        @-webkit-keyframes pulse {
+            0%,
+            100% {
+                -webkit-transform: scale(1);
+                transform: scale(1);
+            }
+            50% {
+                -webkit-transform: scale(1.03);
+                transform: scale(1.03);
+            }
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                -webkit-transform: scale(1);
+                transform: scale(1);
+            }
+            50% {
+                -webkit-transform: scale(1.03);
+                transform: scale(1.03);
+            }
+        }
+        @-webkit-keyframes small-rotation {
+            0%,
+            50%,
+            100% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            25% {
+                -webkit-transform: rotate(1deg);
+                transform: rotate(1deg);
+            }
+            75% {
+                -webkit-transform: rotate(-1deg);
+                transform: rotate(-1deg);
+            }
+        }
+        @keyframes small-rotation {
+            0%,
+            50%,
+            100% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            25% {
+                -webkit-transform: rotate(1deg);
+                transform: rotate(1deg);
+            }
+            75% {
+                -webkit-transform: rotate(-1deg);
+                transform: rotate(-1deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <img class="label" src="img/label.webp">
+    <div class="container">
+        <div class="cards">
+            <div class="card">
+                <a href="/" class="inner-card">
+          <img src="img/1.webp" src-hover="img/1_1.webp">
+        </a>
+                <img class="marker-1-1" src="img/marker_1_1.webp">
+                <img class="marker-1-2" src="img/marker_1_2.webp">
+            </div>
+            <div class="card">
+                <a href="/" class="inner-card">
+          <img src="img/2.webp" src-hover="img/2_1.webp">
+        </a>
+                <img class="marker-2-1" src="img/marker_2_1.webp">
+            </div>
+            <div class="card">
+                <a href="/" class="inner-card">
+          <img class="main-image" src="img/3.webp" src-hover="img/3_1.webp">
+        </a>
+                <img class="hand-3-1" src="img/hand_3_1.webp">
+                <img class="hand-3-2" src="img/hand_3_2.webp">
+                <img class="marker-3" src="img/marker_3.webp">
+            </div>
+        </div>
+    </div>
+    <div class="cursor"></div>
+    <script>
+        const cursor = document.querySelector('.cursor');
+        window.addEventListener('mousemove', (event) => {
+            const relativeX = (event.clientX / window.innerWidth) * 100;
+            const relativeY = (event.clientY / window.innerHeight) * 100;
+            cursor.style.left = `${relativeX + 7}vw`;
+            cursor.style.top = `${relativeY + 13}vh`;
+        });
+        document.querySelectorAll('.inner-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const img = card.querySelector('img');
+                img.setAttribute('src-original', img.src);
+                img.src = img.getAttribute('src-hover');
+            });
+            card.addEventListener('mouseleave', () => {
+                const img = card.querySelector('img');
+                img.src = img.getAttribute('src-original');
+            });
+        });
+        
+    </script>
+</body>
+</html>
